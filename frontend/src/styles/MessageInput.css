@@ -1,0 +1,41 @@
+.message-input {
+  display: flex;
+  border-top: 1px solid #555;
+  background: #444;
+  padding: 10px;
+  align-items: flex-end; /* align input and button to bottom */
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.message-input textarea {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;       /* rounded corners */
+  outline: none;
+  font-size: 15px;
+  background: #202123;       /* ChatGPT dark textarea */
+  color: #fff;
+  resize: none;              /* prevent manual resize */
+  overflow-y: auto;
+  max-height: 120px;         /* max height before scrolling */
+  box-sizing: border-box;
+}
+
+/* Send button */
+.message-input button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background: #4a90e2;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.message-input button:hover {
+  background: #357abd;
+}

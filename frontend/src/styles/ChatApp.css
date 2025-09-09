@@ -1,0 +1,126 @@
+/* Keep your original chat container */
+.chat-container {
+  height: 100vh;
+  width: 100%;
+  background: #121212; /* dark page background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* Keep your original chat box */
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  background: #2c2c2c; /* slightly lighter than page */
+  width: 70%;
+  height: 80%;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+/* Keep your messages area intact */
+.messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #2c2c2c;
+}
+
+/* --------------------------- */
+/* ONLY CHANGE BELOW: input area */
+/* --------------------------- */
+
+/* Input area at bottom inside chat box */
+.message-input {
+  display: flex;
+  padding: 12px;
+  background: #3a3a3a;  /* same as chat box bottom */
+  border-top: 1px solid #444;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Input box - ChatGPT-style pill-shaped */
+.message-input input {
+  flex: 1;
+  padding: 12px 16px;       /* pill-shaped padding */
+  border-radius: 9999px;    /* fully rounded ends */
+  border: none;
+  outline: none;
+  background: #2c2c2c;      /* same as chat interior */
+  color: #fff;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+/* Send button - rounded like input */
+.message-input button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 9999px;    /* fully rounded */
+  background: #0a84ff;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.message-input button:hover {
+  background: #006edc;
+}
+
+.message-file {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 6px 10px;
+  background: #2e2e2e;
+  border-radius: 6px;
+  color: #4a90e2;
+  text-decoration: none;
+  font-weight: bold;
+  word-break: break-word;
+}
+
+.message-file:hover {
+  text-decoration: underline;
+}
+
+.create-room-btn {
+  margin-left: 12px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 9999px; /* fully rounded */
+  background-color: #0a84ff; /* blue like your send button */
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.create-room-btn:hover {
+  background-color: #006edc;
+}
+
+.room-btn {
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: none;
+  background: #0a84ff;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.room-btn:hover {
+  background: #006edc;
+}
