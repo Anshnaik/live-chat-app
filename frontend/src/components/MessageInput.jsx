@@ -22,7 +22,13 @@ export default function MessageInput({ input, setInput, sendMessage, sendFile })
     formData.append("file", file);
 
     try {
-      const res = await fetch("/upload", {
+      // ✅ Fix: point upload to backend, not Vite dev server
+      const backendHost =
+        window.location.hostname === "localhost"
+          ? "http://localhost:3000"
+          : window.location.origin;
+
+      const res = await fetch(`${backendHost}/upload`, {
         method: "POST",
         body: formData,
       });

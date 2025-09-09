@@ -7,17 +7,9 @@ const cors = require("cors");
 
 const app = express();
 app.use(cors());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Serve frontend build
-const frontendPath = path.join(__dirname, "../frontend/dist");
-app.use(express.static(frontendPath));
-app.use((req, res, next) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
-});
-// app.get("/*", (req, res) => {
-//   res.sendFile(path.join(frontendPath, "index.html"));
-// });
+// Serve uploaded files
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Multer storage
 const storage = multer.diskStorage({
@@ -26,9 +18,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+// Upload endpoint
 app.post("/upload", upload.single("file"), (req, res) => {
+  const fileUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
   res.json({
-    url: `/uploads/${req.file.filename}`,
+    url: fileUrl,
     name: req.file.originalname,
   });
 });
@@ -40,13 +34,12 @@ const wss = new WebSocket.Server({ server });
 const activeRooms = new Set();
 
 wss.on("connection", (ws) => {
-  ws.room = null; // default to global chat
+  ws.room = null; // default = global
 
   ws.on("message", (message) => {
     const parsed = JSON.parse(message);
     console.log("Server received WS message:", parsed);
 
-    // Create room
     if (parsed.type === "create-room") {
       const roomId = parsed.room;
       activeRooms.add(roomId);
@@ -56,7 +49,6 @@ wss.on("connection", (ws) => {
       return;
     }
 
-    // Join room
     if (parsed.type === "join-room") {
       const roomId = parsed.room;
       if (activeRooms.has(roomId)) {
@@ -68,7 +60,7 @@ wss.on("connection", (ws) => {
       return;
     }
 
-    // Broadcast messages only to clients in same room
+    // Broadcast messages to clients in same room or in global
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         if ((parsed.room && client.room === parsed.room) || (!parsed.room && !client.room)) {
@@ -81,7 +73,5 @@ wss.on("connection", (ws) => {
   ws.on("close", () => console.log("Client disconnected"));
 });
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const PORT = 3000;
+server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

@@ -18,8 +18,24 @@ export default function Messages({ messages, username, currentRoom }) {
             {m.file && (
               <a
                 href={m.file.url}
-                download={m.file.name} // forces download
                 className="message-file"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  try {
+                    const response = await fetch(m.file.url);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const blob = await response.blob();
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = m.file.name;
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    URL.revokeObjectURL(link.href);
+                  } catch (err) {
+                    console.error("Download failed:", err);
+                  }
+                }}
               >
                 📎 {m.file.name}
               </a>
