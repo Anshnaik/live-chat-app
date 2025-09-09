@@ -12,9 +12,12 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Serve frontend build
 const frontendPath = path.join(__dirname, "../frontend/dist");
 app.use(express.static(frontendPath));
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
+app.use((req, res, next) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
 });
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.join(frontendPath, "index.html"));
+// });
 
 // Multer storage
 const storage = multer.diskStorage({
